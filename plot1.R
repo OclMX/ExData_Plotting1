@@ -15,8 +15,8 @@ powerConsumption <- powerConsumption %>%
 
 
 globalActivePower <- select(powerConsumption, Global_active_power, Date) %>%
-  filter(Date >= as.Date("2/1/2007", format = "%d/%m/%Y") 
-         & Date <= as.Date("2/2/2007", format = "%d/%m/%Y") )
+  filter(Date == as.Date("2/1/2007", format = "%d/%m/%Y") 
+         | Date == as.Date("2/2/2007", format = "%d/%m/%Y") )
 
 
 # Switch device to PNG

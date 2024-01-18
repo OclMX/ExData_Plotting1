@@ -7,6 +7,8 @@ library(dplyr)
 fileName <- "./household_power_consumption.txt"
 powerConsumption <- read.table(fileName, header=TRUE, sep=";", stringsAsFactors=FALSE, dec=".")
 
+powerConsumption <- powerConsumption[powerConsumption$Date %in% c("1/2/2007","2/2/2007") ,]
+
 #Convert fields to datetime and numeric
 powerConsumption <- powerConsumption %>%
   mutate(Global_active_power = as.numeric(Global_active_power))
@@ -19,21 +21,17 @@ powerConsumption <- powerConsumption %>%
   mutate(Date = as.Date(Date, format = "%d/%m/%Y"))
 
 
-#Filter based on date
-globalActivePower <- select(powerConsumption, Global_active_power, Date, DateTime) %>%
-  filter(Date >= as.Date("2/1/2007", format = "%d/%m/%Y") 
-         & Date <= as.Date("2/2/2007", format = "%d/%m/%Y") )
-
 # Switch device to PNG
-#png(filename = "plot2.png", width=480, height=480)
+png(filename = "plot2.png", width=480, height=480)
+lstDateTime = powerConsumption$DateTime
+lstGlobalActivePower = powerConsumption$Global_active_power
 
-with(globalActivePower, 
-     plot(DateTime, Global_active_power, 
-          type="l", xlab="", ylab="Global Active Power (kilowatts)"))
+plot(lstDateTime, lstGlobalActivePower, 
+          type="l", xlab="", ylab="Global Active Power (kilowatts)")
 
 
 
 # Reset to screen.
-#dev.off()
+dev.off()
 dev.cur()
 
